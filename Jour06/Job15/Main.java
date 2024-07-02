@@ -13,5 +13,7 @@ public class Main {
         }
 
         System.out.println("The inversed number is: " + inversedNumber);
+
+        sc.close();
     }
 }

@@ -11,5 +11,6 @@ class Toto {
         //System.out.println("Toto: " + toto);            // Error: non-static variable toto cannot be referenced from a static context
         //We should use t1.toto instead of toto or make toto static
         System.out.println("Toto: " + t1.toto);
+        System.out.println("Toto: " + t2.toto);
     }
 }
