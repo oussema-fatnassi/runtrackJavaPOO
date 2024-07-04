@@ -1,5 +1,7 @@
 package Jour08.Job4;
 
+import java.util.InputMismatchException;
+import java.util.Scanner;
 import java.util.Vector;
 
 public class Sale {
@@ -37,7 +39,7 @@ public class Sale {
 
     public static void main(String[] args) {
         
-        java.util.Scanner sc = new java.util.Scanner(System.in);
+        Scanner sc = new Scanner(System.in);
         Sale sale = new Sale();
         int choice = -1;
 
@@ -54,20 +56,17 @@ public class Sale {
             System.out.println("9. Display the list of orders");
             System.out.println("0. Exit");
             System.out.println("-------------------------------------------------");
-            System.out.print("Enter your choice: ");
             
-            choice = sc.nextInt();
-
+            choice = getIntInput(sc, "Enter your choice: ");
+            
             switch (choice) {
                 case 1:
                     System.out.print("Enter the reference of the article: ");
                     String reference = sc.next();
                     System.out.print("Enter the designation of the article: ");
                     String designation = sc.next();
-                    System.out.print("Enter the unit price of the article: ");
-                    double unitPrice = sc.nextDouble();
-                    System.out.print("Enter the stock of the article: ");
-                    int stock = sc.nextInt();
+                    double unitPrice = getDoubleInput(sc, "Enter the unit price of the article: ");
+                    int stock = getIntInput(sc, "Enter the stock of the article: ");
                     Article article = new Article(reference, designation, unitPrice, stock);
                     sale.addArticle(article);
                     break;
@@ -95,8 +94,7 @@ public class Sale {
                     String corporateName = sc.next();
                     System.out.print("Enter the address of the client: ");
                     String address = sc.next();
-                    System.out.print("Enter the revenue of the client: ");
-                    double revenue = sc.nextDouble();
+                    double revenue = getDoubleInput(sc, "Enter the revenue of the client: ");
                     Client client = new Client(identity, corporateName, address, revenue);
                     sale.addClient(client);
                     break;
@@ -136,8 +134,7 @@ public class Sale {
                                 articleFound = false;
                                 for (Article a : sale.article) {
                                     if (a.getReference().equals(reference)) {
-                                        System.out.print("Enter the quantity: ");
-                                        int quantity = sc.nextInt();
+                                        int quantity = getIntInput(sc, "Enter the quantity: ");
                                         Line line = new Line(order, a, quantity);
                                         lines.add(line);
                                         articleFound = true;
@@ -225,5 +222,35 @@ public class Sale {
             }
         }
         sc.close();
+    }
+
+    private static int getIntInput(Scanner sc, String prompt) {
+        int input = -1;
+        while (true) {
+            System.out.print(prompt);
+            try {
+                input = sc.nextInt();
+                break;
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input! Please enter a valid number.");
+                sc.next(); 
+            }
+        }
+        return input;
+    }
+
+    private static double getDoubleInput(Scanner sc, String prompt) {
+        double input = -1;
+        while (true) {
+            System.out.print(prompt);
+            try {
+                input = sc.nextDouble();
+                break;
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input! Please enter a valid number.");
+                sc.next(); 
+            }
+        }
+        return input;
     }
 }
